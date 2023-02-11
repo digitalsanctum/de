@@ -1,7 +1,12 @@
 [package]
 name = "de"
+description = "Create desktop entries for a webpage, making them available via launcher"
 version = "0.1.0"
 edition = "2021"
+authors = ["Shane Witbeck <shane@digitalsanctum.com>"]
+homepage = "https://github.com/digitalsanctum/de"
+readme = "README.md"
+repository = "https://github.com/digitalsanctum/de"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

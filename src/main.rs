@@ -1,7 +1,7 @@
 use std::{env, fs};
 use std::process::Command;
 
-fn chrome_template() -> &'static str {
+fn template() -> &'static str {
     r#"
 [Desktop Entry]
 Name={{NAME}}
@@ -26,16 +26,17 @@ fn main() {
         link = format!("https://{}", link);
     }
 
-    let out = chrome_template().to_string()
+    let out = template().to_string()
         .replace("{{NAME}}", &*name)
         .replace("{{LINK}}", &*link)
         ;
 
-    let tmp_file = "/tmp/{{NAME}}.desktop".replace("{{NAME}}", &*name);
-    let err_msg = "Unable to write file: {{FILE}}".replace("{{FILE}}", &*tmp_file);
+    let tmp_file = format!("/tmp/{}.desktop", &*name);
+    let err_msg = format!("Unable to write file: {}", &*tmp_file);
     fs::write(tmp_file.clone(), out).expect(&*err_msg);
-    let final_destination = "/usr/share/applications/{{NAME}}.desktop".replace("{{NAME}}", &*name);
-    let mv_args = ["mv", &*tmp_file, &*final_destination];
+
+    let final_path = format!("/usr/share/applications/{}.desktop", &*name);
+    let mv_args = ["mv", &*tmp_file, &*final_path];
 
     let _moved = Command::new("sudo")
         .args(mv_args)
